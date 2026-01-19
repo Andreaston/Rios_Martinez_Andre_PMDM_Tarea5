@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Rios_Martinez_Andre_PMDM_Tarea5</string>
+    <string name="email">Email</string>
+    <string name="contra">Contraseña</string>
+    <string name="btnSiguiente">Siguiente</string>
+    <string name="cbEstado">Recordar usuario</string>
+</resources>
