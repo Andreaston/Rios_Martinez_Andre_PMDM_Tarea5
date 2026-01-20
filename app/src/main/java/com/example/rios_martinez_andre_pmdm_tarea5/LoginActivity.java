@@ -28,8 +28,8 @@ public class LoginActivity extends AppCompatActivity {
 
         //Guardar sesión si hay, sino false
         if (preferencias.getBoolean("guardarSesion", false)){
-            //Intent intent = new Intent(this, );
-            //startActivity(intent);
+            Intent intent = new Intent(this, ListaContactosActivity.class);
+            startActivity(intent);
             return;
         }
 
@@ -53,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
 
             }
 
-            //Intent intent = new Intent(this, );
-            //startActivity(intent);
+            Intent intent = new Intent(this, ListaContactosActivity.class);
+            startActivity(intent);
 
         });
 

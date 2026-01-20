@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Rios_Martinez_Andre_PMDM_Tarea5</string>
+    <!--Pantalla 1-->
     <string name="email">Email</string>
     <string name="contra">Contraseña</string>
     <string name="btnSiguiente">Siguiente</string>
     <string name="cbEstado">Recordar usuario</string>
+    <!--Pantalla 2-->
+    <string name="tituloToobar">Lista contactos</string>
+    <!--ToolbarMenu-->
+    <string name="exportar">Exportar</string>
+    <string name="elimiar">Eliminar Contactos</string>
+    <string name="cerrarSesion">Cerrar Sesion</string>
+
 </resources>
