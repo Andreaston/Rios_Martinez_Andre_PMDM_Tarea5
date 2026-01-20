@@ -10,6 +10,22 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Rios_Martinez_Andre_PMDM_Tarea5" />
+        android:theme="@style/Theme.Rios_Martinez_Andre_PMDM_Tarea5" >
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+    </application>
+
+
+
+
 
 </manifest>
