@@ -11,5 +11,10 @@
     <string name="exportar">Exportar</string>
     <string name="elimiar">Eliminar Contactos</string>
     <string name="cerrarSesion">Cerrar Sesion</string>
-
+    <!--Pantalla 3-->
+    <string name="tlf">Teléfono Contacto</string>
+    <string name="mail">Email Contacto</string>
+    <string name="nombre">Nombre Contacto</string>
+    <string name="url">URL Imagen</string>
+    <string name="btnGuardar">Guardar</string>
 </resources>

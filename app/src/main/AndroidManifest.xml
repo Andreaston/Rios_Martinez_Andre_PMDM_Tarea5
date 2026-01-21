@@ -25,6 +25,8 @@
         <activity
             android:name=".ListaContactosActivity"
             android:exported="false" />
+        <activity android:name=".AgregarContactoActivity"
+            android:exported="false"/>
 
     </application>
 

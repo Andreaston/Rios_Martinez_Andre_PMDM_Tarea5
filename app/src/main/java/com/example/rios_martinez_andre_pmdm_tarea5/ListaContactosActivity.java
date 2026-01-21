@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +26,14 @@ public class ListaContactosActivity extends AppCompatActivity {
     private SharedPreferences preferencias;
     private ContactosAdapter contactosAdapter;
     private ContactosDB contactosDB;
+    private FloatingActionButton btnAgregar;
 
     @Override
     protected void onCreate(Bundle d){
         super.onCreate(d);
         setContentView(R.layout.activity_listacontactos);
+
+        btnAgregar = findViewById(R.id.btnFlotante);
 
         //preferencias de sesion
         preferencias = getSharedPreferences("PreferenciasUsuario", MODE_PRIVATE);
@@ -40,12 +45,17 @@ public class ListaContactosActivity extends AppCompatActivity {
         recicladorContactos = findViewById(R.id.recicladorContactos);
         recicladorContactos.setLayoutManager( new LinearLayoutManager(this));
 
-        //lista de los contactos
+        //lista de los contactos -- FALTA METODO LEER
         //listaContactos =
 
         //conexión con el adaptador
         contactosAdapter = new ContactosAdapter(this,listaContactos);
         recicladorContactos.setAdapter(contactosAdapter);
+
+        btnAgregar.setOnClickListener(v -> {
+            Intent intent = new Intent(this,AgregarContactoActivity.class);
+            startActivity(intent);
+        });
 
     }
 
