@@ -46,7 +46,7 @@ public class ListaContactosActivity extends AppCompatActivity {
         recicladorContactos.setLayoutManager( new LinearLayoutManager(this));
 
         //lista de los contactos -- FALTA METODO LEER
-        //listaContactos =
+        listaContactos = contactosDB.leerTodos();
 
         //conexión con el adaptador
         contactosAdapter = new ContactosAdapter(this,listaContactos);
@@ -72,10 +72,10 @@ public class ListaContactosActivity extends AppCompatActivity {
         int id = menuItem.getItemId();
 
         if (id == R.id.op_exportar){
-            //FALTA exportar
+            //FALTA exportar a JSON
             return true;
         } else if (id == R.id.op_eliminar_todos) {
-            //FALTA Eliminar
+            contactosDB.eliminarTodosContactos();
             listaContactos.clear();
             contactosAdapter.notifyDataSetChanged();
             return true;
@@ -88,6 +88,15 @@ public class ListaContactosActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(menuItem);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        listaContactos.clear();                     // limpiar lista
+        listaContactos.addAll(contactosDB.leerTodos()); // volver a leer BBDD
+        contactosAdapter.notifyDataSetChanged();    // refrescar RecyclerView
     }
 
 }

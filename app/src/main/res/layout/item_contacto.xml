@@ -2,14 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/tvNombre"
-        android:layout_width="wrap_content"
+    <!-- Imagen del contacto -->
+    <ImageView
+        android:id="@+id/imgContacto"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="12dp"/>
+
+    <!-- Textos -->
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Nombre contacto"
-        android:textSize="18sp"/>
+        android:layout_weight="1"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tvNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvTelefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teléfono"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <!-- Botón menú popup -->
+    <ImageView
+        android:id="@+id/btnMenu"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@android:drawable/ic_menu_edit"
+        android:contentDescription="menu"/>
 </LinearLayout>

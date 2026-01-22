@@ -59,8 +59,8 @@ public class AgregarContactoActivity extends AppCompatActivity {
     }
 
     private void cargarContacto(int id){
-        //Contactos contactos = METER LEER
-        Contactos contactos = null;
+        Contactos contactos = db.leerContacto(id);
+        //Contactos contactos = null;
 
         etTlf.setText(contactos.getTelefono());
         etNombre.setText(contactos.getNombre());
@@ -77,6 +77,7 @@ public class AgregarContactoActivity extends AppCompatActivity {
 
     private void guardarContacto(){
 
+
         Contactos contactos = new Contactos(
                 idContacto,
                 etNombre.getText().toString(),
@@ -86,9 +87,9 @@ public class AgregarContactoActivity extends AppCompatActivity {
         );
 
         if (idContacto == -1){
-            //Meter insertar
+            db.insertar(contactos);
         } else {
-            //METER ACTUALIZAR
+            db.actualizar(contactos);
         }
 
         finish();
