@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import coil.Coil;
+import coil.request.ImageRequest;
+
 import com.example.rios_martinez_andre_pmdm_tarea5.AgregarContactoActivity;
 import com.example.rios_martinez_andre_pmdm_tarea5.R;
 
@@ -23,10 +26,12 @@ public class ContactosAdapter extends RecyclerView.Adapter<ContactosAdapter.View
 
     private Context context;
     private List<Contactos> listaContactos;
+    private ContactosDB contactosDB;
 
-    public ContactosAdapter(Context context, List<Contactos> listaContactos) {
+    public ContactosAdapter(Context context, List<Contactos> listaContactos, ContactosDB contactosDB) {
         this.context = context;
         this.listaContactos = listaContactos;
+        this.contactosDB = new ContactosDB(context);
     }
 
     @Override
@@ -40,28 +45,44 @@ public class ContactosAdapter extends RecyclerView.Adapter<ContactosAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        ContactosDB contactosDB = null;
-
         Contactos contacto = listaContactos.get(position);
+
+        String url = contacto.getFoto();
+
+        if (url != null && !url.isEmpty()){
+            coil.Coil.imageLoader(context).enqueue(
+                    new coil.request.ImageRequest.Builder(context)
+                            .data(url)
+                            .target(holder.imgContacto)
+                            .build()
+            );
+        }else {
+            holder.imgContacto.setImageResource(R.drawable.ic_launcher_foreground);
+        }
+
         holder.tvNombre.setText(contacto.getNombre());
         holder.tvTelefono.setText(contacto.getTelefono());
+
         holder.btnMenu.setOnClickListener(v -> {
 
             PopupMenu popup = new PopupMenu(context, holder.btnMenu);
             popup.inflate(R.menu.menu_popup);
 
             popup.setOnMenuItemClickListener(item -> {
-                int id = item.getItemId();
+                int itemId = item.getItemId();
 
-                if (id == R.id.Editar) {
+                if (itemId == R.id.Editar) {
                     Intent intent = new Intent(context, AgregarContactoActivity.class);
                     intent.putExtra("id", contacto.getId());
                     context.startActivity(intent);
                     return true;
                 }
 
-                if (id == R.id.Eliminar) {
-                    contactosDB.eliminarContacto(id);
+                if (itemId == R.id.Eliminar) {
+                    contactosDB.eliminarContacto(contacto.getId());
+                    listaContactos.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, listaContactos.size());
                     return true;
                 }
 
@@ -80,13 +101,14 @@ public class ContactosAdapter extends RecyclerView.Adapter<ContactosAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvNombre, tvTelefono;
-        ImageView btnMenu;
+        ImageView btnMenu, imgContacto;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombre);
             tvTelefono = itemView.findViewById(R.id.tvTelefono);
             btnMenu = itemView.findViewById(R.id.btnMenu);
+            imgContacto = itemView.findViewById(R.id.imgContacto);
         }
     }
 }

@@ -5,13 +5,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +49,11 @@ public class ListaContactosActivity extends AppCompatActivity {
         recicladorContactos = findViewById(R.id.recicladorContactos);
         recicladorContactos.setLayoutManager( new LinearLayoutManager(this));
 
-        //lista de los contactos -- FALTA METODO LEER
+        //lista de los contactos
         listaContactos = contactosDB.leerTodos();
 
         //conexión con el adaptador
-        contactosAdapter = new ContactosAdapter(this,listaContactos);
+        contactosAdapter = new ContactosAdapter(this,listaContactos, contactosDB);
         recicladorContactos.setAdapter(contactosAdapter);
 
         btnAgregar.setOnClickListener(v -> {
@@ -72,7 +76,7 @@ public class ListaContactosActivity extends AppCompatActivity {
         int id = menuItem.getItemId();
 
         if (id == R.id.op_exportar){
-            //FALTA exportar a JSON
+            exportarJSON();
             return true;
         } else if (id == R.id.op_eliminar_todos) {
             contactosDB.eliminarTodosContactos();
@@ -97,6 +101,29 @@ public class ListaContactosActivity extends AppCompatActivity {
         listaContactos.clear();                     // limpiar lista
         listaContactos.addAll(contactosDB.leerTodos()); // volver a leer BBDD
         contactosAdapter.notifyDataSetChanged();    // refrescar RecyclerView
+    }
+
+    private void exportarJSON(){
+        try{
+
+            List<Contactos> contactos = contactosDB.leerTodos();
+
+            Gson gson = new Gson();
+            String json = gson.toJson(contactos);
+
+            File carpeta = getExternalFilesDir(null);
+            File fichero = new File(carpeta, "contactos.json");
+
+            FileOutputStream fileOut = new FileOutputStream(fichero);
+            fileOut.write(json.getBytes());
+            fileOut.close();
+
+            Toast.makeText(this, "Exportado: " + fichero.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+
+        }catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(this, "Error al exportar", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

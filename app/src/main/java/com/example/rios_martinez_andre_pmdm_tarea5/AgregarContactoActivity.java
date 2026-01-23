@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import coil.Coil;
+import coil.request.ImageRequest;
 import database.ContactosDB;
 import modelo.Contactos;
 
@@ -68,7 +70,14 @@ public class AgregarContactoActivity extends AppCompatActivity {
         etImagen.setText(contactos.getFoto());
 
         if (contactos.getFoto() != null && !contactos.getFoto().isEmpty()){
-            //imageView. HAY QUE CARGAR LA IMAGEN
+            Coil.imageLoader(this).enqueue(
+                    new ImageRequest.Builder(this)
+                            .data(contactos.getFoto())
+                            .target(imageView)
+                            .build()
+            );
+        }else {
+            imageView.setImageResource(R.drawable.ic_launcher_foreground);
         }
 
 
