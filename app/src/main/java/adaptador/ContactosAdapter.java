@@ -1,5 +1,6 @@
 package adaptador;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,10 +81,17 @@ public class ContactosAdapter extends RecyclerView.Adapter<ContactosAdapter.View
                 }
 
                 if (itemId == R.id.Eliminar) {
-                    contactosDB.eliminarContacto(contacto.getId());
-                    listaContactos.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, listaContactos.size());
+                    new AlertDialog.Builder(context)
+                            .setTitle("Eliminar contacto")
+                                    .setMessage("¿Seguro quiere eliminar el contacto " + contacto.getNombre() +" ?")
+                                            .setPositiveButton("Sí", (dialog, i) -> {
+                                                contactosDB.eliminarContacto(contacto.getId());
+                                                listaContactos.remove(position);
+                                                notifyItemRemoved(position);
+                                                notifyItemRangeChanged(position, listaContactos.size());
+                                                Toast.makeText(context, "Contacto eliminado", Toast.LENGTH_SHORT).show();
+                                            }).setNegativeButton("No",(a, i) -> a.dismiss()).show();
+
                     return true;
                 }
 

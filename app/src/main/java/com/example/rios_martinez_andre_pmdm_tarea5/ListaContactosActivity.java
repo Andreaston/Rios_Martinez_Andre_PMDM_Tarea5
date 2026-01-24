@@ -1,5 +1,6 @@
 package com.example.rios_martinez_andre_pmdm_tarea5;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -76,12 +77,30 @@ public class ListaContactosActivity extends AppCompatActivity {
         int id = menuItem.getItemId();
 
         if (id == R.id.op_exportar){
-            exportarJSON();
+
+            new AlertDialog.Builder(ListaContactosActivity.this)
+                    .setTitle("Exportar Contactos")
+                            .setMessage("Estás seguro de querer exportar los contactos a un JSON")
+                                    .setPositiveButton("Sí",(dialog,i) -> {
+                                        exportarJSON();
+                                        //Toast.makeText(this, "Exportado JSON", Toast.LENGTH_SHORT).show();
+                                    }).setNegativeButton("No",(dialog, i) -> dialog.dismiss()).show();
+
+
             return true;
         } else if (id == R.id.op_eliminar_todos) {
-            contactosDB.eliminarTodosContactos();
-            listaContactos.clear();
-            contactosAdapter.notifyDataSetChanged();
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Eliminar Contctos")
+                            .setMessage("¿Quieres eliminar todos los contactos?")
+                                    .setPositiveButton("Sí",(dialog, which) -> {
+                contactosDB.eliminarTodosContactos();
+                listaContactos.clear();
+                contactosAdapter.notifyDataSetChanged();
+                Toast.makeText(this,"Contactos eliminados", Toast.LENGTH_SHORT).show();
+            }).setNegativeButton("No",(dialog, which) -> dialog.dismiss()).show();
+
+
             return true;
         } else if (id == R.id.op_cerrar_sesion) {
             preferencias.edit().clear().apply();
